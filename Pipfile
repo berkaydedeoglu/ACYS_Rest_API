@@ -1,0 +1,10 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+
+[packages]
+pyodb = "*"
+flask= "*"
+flask-restful = "*"
+
+[requires]
+python_version = "3.6"
