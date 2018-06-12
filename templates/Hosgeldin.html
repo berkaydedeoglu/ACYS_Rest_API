@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,10 +11,12 @@
 <body class="stackedit">
   <div class="stackedit__html"><h1 id="acysrest">ACYSRest</h1>
 <p>İletişim Yazılım ACYS yazılımı için yazılmış veritabanlarına uzaktan soyutlanmış erişim sağlayan RESTful api.</p>
+<p><strong>Tüm veriler klasik JSON formatında alınıp okunur. Klasik http bağlantısı kurabilirsiniz. (port:80)</strong></p>
 <h2 id="kullanılabilir-yollar">Kullanılabilir Yollar</h2>
 <h3 id="makineler"><a href="./makineler">Makineler</a></h3>
 <h4 id="get">get:</h4>
 <p>Veritabanında kayıtlı kullanılabilir paketlerin tam listesini JSON formatında döndürür.</p>
+<hr><hr><hr>
 <h3 id="etiketler"><a href="./etiketler">Etiketler</a></h3>
 <h4 id="get-1">get:</h4>
 <p>Veritabanına kaydedilmiş tüm etiketleri JSON formatında döndürür.</p>
@@ -29,6 +32,7 @@
 </code></pre>
 </li>
 </ul>
+<hr><hr><hr>
 <h3 id="kayıtlı-olaylar"><a href="./olaylar">Kayıtlı Olaylar</a></h3>
 <h4 id="get-2">get:</h4>
 <p>Veritabanına yazılmış tüm olayları döndürür. Çok fazla kayıt varsa yavaş çalışabilir</p>
@@ -47,6 +51,21 @@
 <li>
 <p><strong>./olaylar/&lt;int: yil&gt;/&lt;int: ay&gt;/&lt;int: gun&gt;</strong> : İstenilen yıl,  ay ve güne göre arama yapılır.</p>
 <pre><code>./olaylar/2012/06/17 ::: 2012 yılının 6. ayının 17. gününe göre sorgu yapılır.
+</code></pre>
+</li>
+</ul>
+<h4 id="post">post:</h4>
+<p>Veritabanına yeni olay yazar. Aldığı veriler:</p>
+<ul>
+<li>
+<p><strong>makine</strong>: Değişiklik olan makinenin adı</p>
+</li>
+<li>
+<p><strong>mesaj</strong>: Değişiklik mesajı</p>
+</li>
+<li>
+<p><strong>zaman</strong>: Değişiklik yapılma zamanı (datetime tipinde “yyyy-MM-dd hh.mm.ss” formatında olmalıdır)</p>
+<pre><code>post : ./olaylar  data= {"mesaj": "çözgü değişti", "zaman": DateTime.Now, "makine": "TEZGAH 1"} 
 </code></pre>
 </li>
 </ul>

@@ -2,9 +2,9 @@ from flask_restful import Resource
 
 class Etiketler(Resource):
     
-    def __init__(self, cursor):
+    def __init__(self, database):
         Resource()
-        self._db_cursor = cursor
+        self._db_cursor = database.cursor()
 
     def get(self, etiket_tipi=None):
         if etiket_tipi:

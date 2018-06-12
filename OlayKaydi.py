@@ -2,9 +2,10 @@ from flask_restful import Resource, reqparse
 from flask import Request
 
 class OlayKaydi(Resource):
-    def __init__(self, cursor):
+    def __init__(self, database):
         super()
-        self.cursor = cursor
+        self._cursor = database.cursor()
+        self._database = database
 
         self.parser = reqparse.RequestParser()
         
@@ -15,16 +16,17 @@ class OlayKaydi(Resource):
         self.parser.add_argument("makine_adi")
 
         sorgu = self._sorgu_olustur(yil, ay, gun)
-        db_cevap = self.cursor.execute(sorgu)
+        db_cevap = self._cursor.execute(sorgu)
 
         return self._cevap_olustur(db_cevap)
     
     def post(self):
-        return self._kayit_olustur()
 
+        kayit = self._kayit_olustur()
+        self._cursor.execute(kayit)
+        self._database.commit()
 
-
-
+        return 200
 
     def _sorgu_olustur(self, yil=None, ay=None, gun=None):
         args = self.parser.parse_args()
@@ -56,8 +58,7 @@ class OlayKaydi(Resource):
 
         args = self.parser.parse_args()
 
-        kayit = "INSERT INTO Olaylar ({}, {}, {})"
-        kayit.format(args["makine"], args["mesaj"], args["zaman"])
+        kayit = "INSERT INTO Olaylar VALUES ('{}', '{}', convert(datetime, '{}'))".format(args["makine"], args["mesaj"], args["zaman"])
 
         return kayit
 

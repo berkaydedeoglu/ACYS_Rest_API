@@ -1,8 +1,9 @@
 from flask_restful import Resource
 
 class Makineler (Resource):
-    def __init__(self, cursor):
+    def __init__(self, database):
         Resource()
+        self.database = database
     
     def get(self):
         return "passed"
