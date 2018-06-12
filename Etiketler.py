@@ -3,13 +3,14 @@ from flask_restful import Resource
 class Etiketler(Resource):
     
     def __init__(self, cursor):
-        super()
+        Resource()
         self._db_cursor = cursor
 
     def get(self, etiket_tipi=None):
         if etiket_tipi:
+            # TODO: SQL injection var
             sorgu = "SELECT * FROM Etiketler WHERE EtiketTip={}"
-            sorgu = sorgu.format(makine_tipi)
+            sorgu = sorgu.format(etiket_tipi)
         else:
             sorgu = "SELECT * FROM Etiketler"
         

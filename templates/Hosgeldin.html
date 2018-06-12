@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hosgeldin</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="acysrest">ACYSRest</h1>
+<p>İletişim Yazılım ACYS yazılımı için yazılmış veritabanlarına uzaktan soyutlanmış erişim sağlayan RESTful api.</p>
+<h2 id="kullanılabilir-yollar">Kullanılabilir Yollar</h2>
+<h3 id="makineler"><a href="./makineler">Makineler</a></h3>
+<h4 id="get">get:</h4>
+<p>Veritabanında kayıtlı kullanılabilir paketlerin tam listesini JSON formatında döndürür.</p>
+<h3 id="etiketler"><a href="./etiketler">Etiketler</a></h3>
+<h4 id="get-1">get:</h4>
+<p>Veritabanına kaydedilmiş tüm etiketleri JSON formatında döndürür.</p>
+<h5 id="kullanılabilir-özellikler">Kullanılabilir Özellikler:</h5>
+<ul>
+<li>
+<p><strong>./etiketler/&lt;int: tip&gt;:</strong> Etiketlerin tipine göre sorgu yapılmasını sağlar.</p>
+<pre><code>./etiketler/9 ::: Tüm "iş bağı" cihazlarını gösterir. 
+(iş bağı tip numarası 9'dur)
+
+./etiketler/1 ::: Tüm "çözgü" cihazlarını gösterir. 
+(çözgü tip numarası 9'dur)
+</code></pre>
+</li>
+</ul>
+<h3 id="kayıtlı-olaylar"><a href="./olaylar">Kayıtlı Olaylar</a></h3>
+<h4 id="get-2">get:</h4>
+<p>Veritabanına yazılmış tüm olayları döndürür. Çok fazla kayıt varsa yavaş çalışabilir</p>
+<h5 id="kullanılabilir-özellikler-1">Kullanılabilir Özellikler:</h5>
+<ul>
+<li>
+<p><strong>./olaylar/&lt;int: yil&gt;:</strong> İlgili yıla göre sorgu yapılır.</p>
+<pre><code>./olaylar/2012 ::: 2012 yılına ait olayları gönderir.
+</code></pre>
+</li>
+<li>
+<p><strong>./olaylar/&lt;int: yil&gt;/&lt;int: ay&gt;:</strong> İstenilen yıl ve aya göre sogu yapılır.</p>
+<pre><code>./olaylar/2012/06 ::: 2012 yılının 6. ayına göre sorgu yapılır.
+</code></pre>
+</li>
+<li>
+<p><strong>./olaylar/&lt;int: yil&gt;/&lt;int: ay&gt;/&lt;int: gun&gt;</strong> : İstenilen yıl,  ay ve güne göre arama yapılır.</p>
+<pre><code>./olaylar/2012/06/17 ::: 2012 yılının 6. ayının 17. gününe göre sorgu yapılır.
+</code></pre>
+</li>
+</ul>
+</div>
+</body>
+
+</html>
