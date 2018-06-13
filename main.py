@@ -29,4 +29,4 @@ def start():
 if __name__ == "__main__":
     
     YollariEkle.YollariEkle(api, (database1, database2))
-    app.run(host="192.168.0.72", port=80, debug=True)
+    app.run(port=80, debug=True)
