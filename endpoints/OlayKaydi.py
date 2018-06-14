@@ -16,6 +16,9 @@ class OlayKaydi(Resource):
         # Veritabanında işlem yapabilmek için oluşturulan imleç nesnesi.
         self._cursor = database.cursor()
 
+        # Veirtabanı değişikliklerinin kaydedilmesi için veritabanı erişebilir. 
+        self._database = database
+
         # Gelen parametrelei izleyip ayrılmasını sağlayan nesne
         self._parser = reqparse.RequestParser()
 
@@ -36,7 +39,6 @@ class OlayKaydi(Resource):
         self._parser.add_argument("makine_adi")
 
         sorgu = self._sorgu_olustur(yil, ay, gun)
-        print(sorgu)
         db_cevap = self._cursor.execute(sorgu)
 
         return self._cevap_olustur(db_cevap)
