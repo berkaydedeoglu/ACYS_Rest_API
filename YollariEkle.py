@@ -3,17 +3,17 @@
 def YollariEkle(api, databases):
     import flask_restful
 
-    import Etiketler
+    from endpoints import Etiketler
     api.add_resource(Etiketler.Etiketler, "/etiketler",
                     "/etiketler/<etiket_tipi>",
                     resource_class_kwargs={"database": databases[0]})
     
 
-    import Makineler
+    from endpoints import Makineler
     api.add_resource(Makineler.Makineler, "/makineler",
                     resource_class_kwargs={"database": databases[0]})
 
-    import OlayKaydi
+    from endpoints import OlayKaydi
     api.add_resource(OlayKaydi.OlayKaydi, "/olaylar",
                     "/olaylar/<int:yil>",
                     "/olaylar/<int:yil>/<int:ay>",
