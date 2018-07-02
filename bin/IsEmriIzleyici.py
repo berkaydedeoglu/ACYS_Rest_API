@@ -12,6 +12,10 @@ class IsEmriIzleyici(threading.Thread):
         self.kullanilmis_emirler = []
         self.bayrak = False
         self.timer = None
+        self.thread_bayrak = True
+
+    def durdur(self):
+        self.thread_bayrak = False
 
     def diger_operasyon(self, zaman):
         if self.anlik_is_emri:
@@ -77,7 +81,7 @@ class IsEmriIzleyici(threading.Thread):
 
     def run(self):
 
-        while True:
+        while self.thread_bayrak:
             # Şu anki iş emrini seçer
             self.anlik_olay_kontrol()
 
@@ -92,7 +96,7 @@ class IsEmriIzleyici(threading.Thread):
 
             diff = int(timer2-self.timer)
 
-            # Başlangıç zamanından itibaren geçem süre yazılır.
+            # Başlangıç zamanından itibaren geçen süre yazılır.
             self.is_emirleri_cls.set_baslangic_gecikme(self.anlik_is_emri["emir_id"], diff)
 
             if diff > self.anlik_is_emri["calisma_zamani"]:

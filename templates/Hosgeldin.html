@@ -121,6 +121,23 @@
 <li><strong>zaman:</strong> Olayın gerçekleşme zamanı.</li>
 <li><strong>makine:</strong> Olayın gerçekleştiği makine. (Makine kodu da olabilir)</li>
 </ul>
+<hr>
+<hr>
+<h3 id="i̇ş-emirleri"><a href="./isemirleri">İş Emirleri</a>:</h3>
+<p>CoralReef  yazılımının oluşturduğu iş emirleri tablosunun tüm satırlarını listeler. Listelenen sütunlar:</p>
+<ul>
+<li><strong>Operation.OID</strong> : Benzersiz operasyon ID’si. (<em>olay_id</em>)</li>
+<li><strong>Operation .Name</strong>:  İşin adı (<em>olay_isim</em>)</li>
+<li><strong>WorkOrder.PlanningBeginTime</strong>: İşin planlanan başlama zamanı. (<em>planlanan_baslangic</em>)</li>
+<li><strong>WorkOrder.PlanningEndTime</strong>: İşin planlanan bitiş zamanı. (<em>planlanan_bitis</em>)</li>
+<li><strong>WorkOrder.ActualBeginTime</strong>: İşin gerçekte başladığı an (<em>gercek_baslangic</em>)</li>
+<li><strong>WorkOrder.ActualEndTime</strong>: İşin gerçekte tamamlandığı an (<em>gerçek_bitis</em>)</li>
+<li><strong>WorkOrder.RunTime</strong>: Planlanan zamanlara göre saniye cinsinden zaman. (<em>calisma_zamani</em>)</li>
+<li><strong>WorkOrder.HeadTime</strong> : İşin gerçek zamanlı saniye cinsinden süresi. Dinamik. (<em>bitis_gecikme</em>)</li>
+<li><strong>WorkOrder.TailTime</strong> : İşin diğer işler yüzünden toplam gecikmesi. Dinamik. (<em>baslangic_gecime</em>)</li>
+</ul>
+<p><strong>Geliştirici Notu:</strong> İşlerin saniye cinsinden anlık değişimlerinin tutulması API kullanan clientler tarafından zorunlu olmasa da işleri kolaylaştırdığından ve istemcilerin yorumlama değil sadece gösterim yapma fikrine daha uygun olduğundan kullanılmıştır. Yapılan testlerde bu ekstra sütunların tutulması ve dinamik olarak değiştirilmesi çok çok küçük farklar oluşturduğundan görmezden gelinmiştir.</p>
+<p>Dinamik bilgiler anlık olarak (istenilen sürede bir) güncellenir. Güncellenme olayları ise anlık olaylar endpointinden sağlanır. Yani anlık olaylara gönderdiğiniz bir değer bu endpointi de etkileyebilir.</p>
 </div>
 </body>
 
