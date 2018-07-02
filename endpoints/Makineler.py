@@ -16,6 +16,6 @@ class Makineler (Resource):
     
     def cevap_olustur(self, db_cevap: tuple)-> dict:
         
-        makineler = [{"ad": i[0], "okuyucu": i[1], "anten": i[2]} for i in db_cevap]
+        makineler = [{"ad": i[0].strip(), "okuyucu": i[1], "anten": i[2]} for i in db_cevap]
         return {"makineler": makineler} 
 

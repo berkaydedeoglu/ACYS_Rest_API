@@ -1,12 +1,18 @@
 ﻿# ACYSRest
 İletişim Yazılım ACYS yazılımı için yazılmış veritabanlarına uzaktan soyutlanmış erişim sağlayan RESTful api. 
 
+**Tüm veriler klasik JSON formatında alınıp okunur. Klasik http bağlantısı kurabilirsiniz. (port:80)**
+
+  
+
 ## Kullanılabilir Yollar 
 
 ### [Makineler](./makineler)
 #### get:
 Veritabanında kayıtlı kullanılabilir paketlerin tam listesini JSON formatında döndürür.
 
+---
+---
 
 ### [Etiketler](./etiketler)
 #### get:
@@ -22,9 +28,16 @@ Veritabanına kaydedilmiş tüm etiketleri JSON formatında döndürür.
     (çözgü tip numarası 9'dur)
     ```
 
+---
+---
+
 ### [Kayıtlı Olaylar](./olaylar)
 #### get:
-Veritabanına yazılmış tüm olayları döndürür. Çok fazla kayıt varsa yavaş çalışabilir
+Veritabanına yazılmış tüm olayları döndürür. Çok fazla kayıt varsa yavaş çalışabilir 
+
+*(GELİŞTİRME NOTU: Sayfalandırma yapılabilir.)*
+*(GELİŞTİRME NOTU: Büyük verilerde veri kullanımından tasarruf için çözgü adı makine adı gibi veriler kaldırılıp ilişkisel yolla bağlanabilir.*
+
 ##### Kullanılabilir Özellikler:
 * **./olaylar/<int: yil>:** İlgili yıla göre sorgu yapılır.
 	```
@@ -41,4 +54,67 @@ Veritabanına yazılmış tüm olayları döndürür. Çok fazla kayıt varsa ya
 	```
 	./olaylar/2012/06/17 ::: 2012 yılının 6. ayının 17. gününe göre sorgu yapılır.
 	```
+
+#### post:
+Veritabanına yeni olay yazar. Aldığı veriler:
+* **makine_adi**: Değişiklik olan makinenin adı
+* **makine_kodu**: Değişiklik olan makinenin sistem kodu
+* **olay**: Değişiklik mesajı
+* **cihaz_tipi**: Makineye bağlanan ya da sökülen cihazın tip numarası.
+* **cihaz_adi**: Makineye bağlanan cihazın okunabilir adı.
+* **cihaz_rfid**: Bağlanan cihazın etiket kodu. 
+* **zaman**: Değişiklik yapılma zamanı (datetime tipinde "yyyy-MM-dd hh.mm.ss" formatında olmalıdır)
+
+	```
+	post : ./olaylar  data={"makine_adi": "TEZGAH 1",
+					"zaman": "21.06.2018 06:58:34.000
+					"olay": "Çözgü değişti",
+					"makine_kodu": "axBdcf",
+					"cihaz_tipi": "1",
+					"cihaz_adi": "Çözgü 1",
+					"cihaz_rfid": "1274638462b47vc00008364830", })
+	```
+---
+---
+
+### [Anlık Olaylar](./anlikolaylar)
+
+Anlık olay oluşumlarının izlenebildiği yoldur. Makineye çözgü bağlanması, cihazların izlenmesi istenen olaylar bu yoldan ulaşılabilir.
+
+**NOT:** Bu endpoint veritabanıyla hiçbir durumda haberleşmez.  Veriler daima bulunan makinenin RAM'inde tutulur. Bu yüzden yazılan veriler geçicidir. 
+
+Şimdilik sadece makine olaylarını gösteriyor. Örnek bir makine olayı:
+
+```
+{
+  "olaylar": [
+    {
+      "olay": "degisim_basladi",
+      "mesaj": "Bağlanma bekleniyor",
+      "zaman": "19.06.2018 01:57",
+      "makine": "TEZGAH 1"
+    }
+  ]
+}
+```
+
+Bu endpoint,  projedeki tüm alanların birbirleri ile haberleşmesi için oluşturulmuştur. Bu yüzden bir olaydaki anahtar sözcüklerin nasıl seçileceği haberleşecek iki ucun anlaşmalarına bağlıdır.
+
+Örneğin C# Desktop Cilent ve Android Client uç tarafları çözgü değişiminin başladığını belirtmek için **olay** anahtar sözcüğünü kullanırlar. Yukarıdaki örnekte çözgü değişiminin başladığını ifade etmek için *degisim_basladi* etiketi kullanılmıştır. İki taraf da bu etiketi dinler.
+
+#### get:
+
+Sistemde o  anda yazılmış olayların tamamını listeler.  Olayları dinleyen tarafta kullanılır.
+
+**NOT:** Şimdilik sadece makine olaylarını desteklemektedir. Her makine için karışıklığı önlemek ve performansı artırmak için maksimum 1 olay tutulur.  
+
+#### post:
+
+Sisteme bir olay ekler. Olayları gönderecek tarafta kullanılır. Alınan veriler:
+
+* **olay:** Olay kodu. Tarafların haberleşmede kullandığı kodlar.
+* **mesaj:** Olayla birlikte gönderilen mesaj.
+*  **zaman:** Olayın gerçekleşme zamanı. 
+*  **makine:** Olayın gerçekleştiği makine. (Makine kodu da olabilir)  
+ 
 

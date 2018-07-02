@@ -16,7 +16,7 @@ class OlayKaydi(Resource):
         # Veritabanında işlem yapabilmek için oluşturulan imleç nesnesi.
         self._cursor = database.cursor()
 
-        # Veirtabanı değişikliklerinin kaydedilmesi için veritabanı erişebilir. 
+        # Veirtabanı değişikliklerinin kaydedilmesi için veritabanı erişebilir.
         self._database = database
 
         # Gelen parametrelei izleyip ayrılmasını sağlayan nesne
@@ -34,10 +34,6 @@ class OlayKaydi(Resource):
         NOT: Yıl verilmeden ay ve gün, ay verilmeden gün filtresi çalışmaz.
         """
 
-        # Sorguyla verilen argümanların okunması.
-        self._parser.add_argument("kayit_sayisi")
-        self._parser.add_argument("makine_adi")
-
         sorgu = self._sorgu_olustur(yil, ay, gun)
         db_cevap = self._cursor.execute(sorgu)
 
@@ -50,15 +46,19 @@ class OlayKaydi(Resource):
 
         def kayit_olustur():
             # Gelen parametrelerin okunması için kaydının yapılması.
-            self._parser.add_argument("makine")
+            self._parser.add_argument("makine_adi")
+            self._parser.add_argument("makine_kodu")
+            self._parser.add_argument("cihaz_tipi")
+            self._parser.add_argument("cihaz_adi")
+            self._parser.add_argument("olay")
+            self._parser.add_argument("cihaz_rfid")
             self._parser.add_argument("zaman")
-            self._parser.add_argument("mesaj")
 
             # Gelen parametrelerin ayrıştırılması.
             args = self._parser.parse_args()
 
-            kayit = "INSERT INTO Olaylar VALUES ('{}', '{}', convert(datetime, '{}'))".format(
-                args["makine"], args["mesaj"], args["zaman"])
+            kayit = "INSERT INTO BaglanmaOlay VALUES ('{}', '{}', '{}', '{}', '{}', '{}', convert(datetime, '{}'))".format(
+                args["olay"], args["makine_adi"], args["makine_kodu"], args["cihaz_tipi"], args["cihaz_adi"], args["cihaz_rfid"], args["zaman"])
 
             return kayit
 
@@ -70,9 +70,13 @@ class OlayKaydi(Resource):
 
     def _sorgu_olustur(self, yil=None, ay=None, gun=None):
 
+        # Sorguyla verilen argümanların okunması.
+        self._parser.add_argument("kayit_sayisi")
+        self._parser.add_argument("makine_adi")
+
         args = self._parser.parse_args()
 
-        sorgu = "SELECT {} FROM Olaylar WHERE 1=1 "
+        sorgu = "SELECT {} FROM BaglanmaOlay WHERE 1=1 "
 
         if args["kayit_sayisi"]:
             sorgu = sorgu.format(args["kayit_sayisi"])
@@ -80,23 +84,24 @@ class OlayKaydi(Resource):
             sorgu = sorgu.format("*")
 
         if args["makine_adi"]:
-            sorgu += "AND MachineName = args[{}]".format(args["makine_adi"])
+            sorgu += "AND MakineAdi = '{}'".format(args["makine_adi"])
 
         # TODO: Çok fazla iç içe if tanımlandı.
         if yil:
-            sorgu += "AND DATEPART(YEAR, Times) = {} ".format(yil)
+            sorgu += "AND DATEPART(YEAR, Zaman) = {} ".format(yil)
 
             if ay:
-                sorgu += "AND DATEPART(MONTH, Times) = {} ".format(ay)
+                sorgu += "AND DATEPART(MONTH, Zaman) = {} ".format(ay)
 
                 if gun:
-                    sorgu += "AND DATEPART(DAY, Times) = {} ".format(gun)
+                    sorgu += "AND DATEPART(DAY, Zaman) = {} ".format(gun)
 
         return sorgu
 
     def _cevap_olustur(self, db_cevap):
         """Veritabanından gelen cevabı json formatına dönüştürebilecek hale dönüştürür. """
-        
+
         return {"olaylar": [{
-            "makine": i[2], "olay": i[1], "zaman": str(i[3])
+            "olay": i[1], "makine_adi": i[2], "makine_kodu": i[3], "cihaz_tipi": i[4],
+            "cihaz_adi": i[5], "cihaz_rfid": i[6], "zaman": str(i[7])
         }for i in db_cevap]}

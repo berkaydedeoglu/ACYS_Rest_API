@@ -1,7 +1,8 @@
 from flask import Flask, request, render_template
 from flask_restful import Api, Resource
-import YollariEkle
+from bin import YollariEkle
 import pyodbc as db
+from bin import IsEmriIzleyici
 
 app = Flask(__name__)
 api = Api(app)
@@ -20,11 +21,17 @@ database2 = db.connect(r'DRIVER={SQL SERVER};'
                        r'UID=sa;'
                        r'PWD=Berkay.97;')
 
+database3 = db.connect(r'DRIVER={SQL SERVER};'
+                       r'SERVER=localhost;'
+                       r'DATABASE=CoralReef_Ersan;'
+                       r'UID=sa;'
+                       r'PWD=Berkay.97;')
+
 
 @app.route("/")
 def start():
     """API'ya ilk bağlanıldığında API kullanıcıyı dökümantasyon
-    ile karşılar. Dökümantasyon, ./templates/ içinde 
+    ile karşılar. Dökümantasyon, ./templates/ içinde
     Hoşgeldin.html'de bulunur.
 
     APInin geri kalanında endpointler ./YollariEkle.py modülünde
@@ -37,7 +44,11 @@ if __name__ == "__main__":
 
     # Tüm endpointler eklenir. Enpointlerin çalışması için oluşturulan
     # veritabanı referansları iletilir.
-    YollariEkle.YollariEkle(api, (database1, database2))
+    YollariEkle.YollariEkle(api, (database1, database2, database3))
 
+    test = IsEmriIzleyici.IsEmriIzleyici(database3)
+    test.start()
+    
     # Sunucu istenilen prottan dinlemeye başlar
-    app.run(host="192.168.0.72", port=80, debug=True)
+    # app.run(host="192.168.0.72", port=80, debug=True)
+    app.run("192.168.0.72", port=80, debug=True)

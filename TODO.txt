@@ -1,1 +1,5 @@
-Genel Bilgi sorgusu haz�rla
+Genel Bilgi sorgusu hazırla
+
+Olaylar kısmında sayfalandırma ekle
+
+Sınıflar her  çağrılmada yeniden oluşturuluyor gerekirse optimizasyon çalışması
