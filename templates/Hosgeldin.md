@@ -114,7 +114,32 @@ Sisteme bir olay ekler. Olayları gönderecek tarafta kullanılır. Alınan veri
 
 * **olay:** Olay kodu. Tarafların haberleşmede kullandığı kodlar.
 * **mesaj:** Olayla birlikte gönderilen mesaj.
-*  **zaman:** Olayın gerçekleşme zamanı. 
-*  **makine:** Olayın gerçekleştiği makine. (Makine kodu da olabilir)  
+* **zaman:** Olayın gerçekleşme zamanı. 
+* **makine:** Olayın gerçekleştiği makine. (Makine kodu da olabilir)  
+
+---
+---
+
+### [İş Emirleri](./isemirleri):
+
+CoralReef  yazılımının oluşturduğu iş emirleri tablosunun tüm satırlarını listeler. Listelenen sütunlar:
+
+
+  - **Operation.OID** : Benzersiz operasyon ID'si. (_olay_id_)
+  - **Operation .Name**:  İşin adı (_olay_isim_)
+  - **WorkOrder.PlanningBeginTime**: İşin planlanan başlama zamanı. (_planlanan_baslangic_)
+  - **WorkOrder.PlanningEndTime**: İşin planlanan bitiş zamanı. (_planlanan_bitis_)
+  - **WorkOrder.ActualBeginTime**: İşin gerçekte başladığı an (_gercek_baslangic_)
+  - **WorkOrder.ActualEndTime**: İşin gerçekte tamamlandığı an (_gerçek_bitis_)
+  - **WorkOrder.RunTime**: Planlanan zamanlara göre saniye cinsinden zaman. (_calisma_zamani_)
+  - **WorkOrder.HeadTime** : İşin gerçek zamanlı saniye cinsinden süresi. Dinamik. (_bitis_gecikme_)
+  - **WorkOrder.TailTime** : İşin diğer işler yüzünden toplam gecikmesi. Dinamik. (_baslangic_gecime_)
+
+**Geliştirici Notu:** İşlerin saniye cinsinden anlık değişimlerinin tutulması API kullanan clientler tarafından zorunlu olmasa da işleri kolaylaştırdığından ve istemcilerin yorumlama değil sadece gösterim yapma fikrine daha uygun olduğundan kullanılmıştır. Yapılan testlerde bu ekstra sütunların tutulması ve dinamik olarak değiştirilmesi çok çok küçük farklar oluşturduğundan görmezden gelinmiştir.
+
+Dinamik bilgiler anlık olarak (istenilen sürede bir) güncellenir. Güncellenme olayları ise anlık olaylar endpointinden sağlanır. Yani anlık olaylara gönderdiğiniz bir değer bu endpointi de etkileyebilir.    
+
+Güncellenme sıklığını settings.br dosyasından değiştirebilirsiniz. (_IS_EMIRLERI_GUNCELLEME_SURESI_)
+
  
 

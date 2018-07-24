@@ -8,9 +8,9 @@ class IsEmirleri(Resource):
         self. _cursor = database.cursor()
 
     def get(self):
-        sorgu = """SELECT W.OID, O.OID, O.Name, W.PlanningBeginTime,
+        sorgu = """SELECT W.OID, O.OID, W.WorkStationID, O.Name, W.PlanningBeginTime,
                     W.PlanningEndTime, W.ActualBeginTime,
-                    W.ActualEndTime, W.RunTime, W.HeadTime, W.TailTime
+                    W.ActualEndTime, W.RunTime, W.HeadTime, W.TailTime, W.QueTime
                     FROM WorkOrder as W JOIN Operation as O ON O.OID = W.OperationID"""
 
         db_cevap = self._cursor.execute(sorgu)
@@ -18,24 +18,37 @@ class IsEmirleri(Resource):
         return self.cevap_olustur(db_cevap)
 
     def cevap_olustur(self, db_cevap):
+
+        """is_emirleri = {}
+        j = db_cevap.fetchall()
+
+        makine_sayisi = int(len(j)/6)
+        print(makine_sayisi)
+
+        for i in db_cevap:
+            pass    
+            
+        return is_emirleri"""
+
         return {"is_emirleri": [{
             "emir_id": i[0],
             "olay_id": i[1],
-            "olay_isim": i[2],
-            "planlanan_baslangic" : str(i[3]),
-            "planlanan_bitis" : str(i[4]),
-            "gercek_baslangic" : str(i[5]),
-            "gercek_bitis" : str(i[6]),
-            "calisma_zamani" : i[7],
-            "bitis_gecikme" : i[8],
-            "baslangic_gecikme" : i[9]} for i in db_cevap]}
+            "makine_id": i[2],
+            "olay_isim": i[3],
+            "planlanan_baslangic" : str(i[4]),
+            "planlanan_bitis" : str(i[5]),
+            "gercek_baslangic" : str(i[6]),
+            "gercek_bitis" : str(i[7]),
+            "calisma_zamani" : i[8],
+            "bitis_gecikme" : i[9],
+            "baslangic_gecikme" : i[10],
+            "isci_gecikme": i[11]} for i in db_cevap]}
 
     def set_gercek_baslangic(self, emir_id, zaman):
         dt = datetime.datetime.strptime(zaman[:19], '%Y-%m-%d %H:%M:%S')
         sorgu = "UPDATE WorkOrder set ActualBeginTime=convert(datetime, '{}') WHERE OID={}".format(zaman, emir_id)
         self._cursor.execute(sorgu)
         self._db.commit()
-
 
     def set_gercek_bitis(self, emir_id, zaman):
         dt = datetime.datetime.strptime(zaman[:19], '%Y-%m-%d %H:%M:%S')

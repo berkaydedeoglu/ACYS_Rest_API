@@ -75,7 +75,6 @@ class IsEmriIzleyici(threading.Thread):
             self.bayrak = False
         elif olay["olay"] == "degisim_bitti":
             # Değişim tamamlanmıştır
-
             # Kullanılmışları temizle
             self._index = -1
 

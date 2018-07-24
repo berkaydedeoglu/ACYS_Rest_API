@@ -15,7 +15,7 @@ class AnlikOlay(Resource):
         self._parametreler.add_argument("olay")
         self._parametreler.add_argument("mesaj")
         self._parametreler.add_argument("zaman")
-        self._parametreler.add_argument("makine")
+        self._parametreler.add_argument("makine_id")
 
         args = self._parametreler.parse_args()
 
@@ -25,21 +25,21 @@ class AnlikOlay(Resource):
             m["olay"] = args["olay"]
             m["mesaj"] = args["mesaj"]
             m["zaman"] = args["zaman"]
-            m["makine"] = args["makine"].strip()
+            m["makine_id"] = args["makine_id"].strip()
 
         else:
             self._olaylar.append({
                 "olay": args["olay"],
                 "mesaj": args["mesaj"],
                 "zaman": args["zaman"],
-                "makine": args["makine"].strip()
+                "makine_id": args["makine_id"].strip()
             })
 
         return 200
 
-    def makineyi_bul(self, makine_adi):
+    def makineyi_bul(self, makine_id):
         for i in self._olaylar:
-            if i["makine"] == makine_adi:
+            if i["makine_id"] == makine_id:
                 return i
 
         return -1
