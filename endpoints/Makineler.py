@@ -6,8 +6,8 @@ class Makineler (Resource):
         self._cursor = database.cursor()
     
     def get(self):
-        sorgu  = """SELECT M.MakineAdi, O.OkuyucuID, O.AntenID FROM Makineler AS M 
-                    JOIN MakineOkuyuculari AS O ON O.MakineID = M.MakineID"""
+        sorgu  = """SELECT M.MakineID, M.MakineAdi, M.AntenID, O.OkuyucuID
+                    From Makineler as M LEFT JOIN Antenler as O on (O.AntenNo = M.AntenID)"""
 
         db_cevap = self._cursor.execute(sorgu)
 
@@ -16,6 +16,7 @@ class Makineler (Resource):
     
     def cevap_olustur(self, db_cevap: tuple)-> dict:
         
-        makineler = [{"ad": i[0].strip(), "okuyucu": i[1], "anten": i[2]} for i in db_cevap]
+        makineler = [{"id": i[0], "ad":i[1], "anten": i[2], "okuyucu": i[3]} for i in db_cevap]
         return {"makineler": makineler} 
+
 

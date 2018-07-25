@@ -11,7 +11,7 @@ def YollariEkle(api, databases):
 
     from endpoints import Makineler
     api.add_resource(Makineler.Makineler, "/makineler",
-                    resource_class_kwargs={"database": databases[0]})
+                    resource_class_kwargs={"database": databases[1]})
 
     from endpoints import OlayKaydi
     api.add_resource(OlayKaydi.OlayKaydi, "/olaylar",

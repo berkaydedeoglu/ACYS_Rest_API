@@ -1,5 +1,5 @@
-Genel Bilgi sorgusu hazırla
+﻿Genel Bilgi sorgusu hazırla
 
 Olaylar kısmında sayfalandırma ekle
 
-Sınıflar her  çağrılmada yeniden oluşturuluyor gerekirse optimizasyon çalışması
+Sınıflar her  çağrılmada yeniden oluşturuluyor gerekirse optimizasyon çalışması (singleton)

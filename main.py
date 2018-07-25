@@ -1,8 +1,7 @@
 from flask import Flask, request, render_template
 from flask_restful import Api, Resource
-from bin import YollariEkle
 import pyodbc as db
-from bin import IsEmriIzleyici
+from bin import IsEmriIzleyici, AyarOkuyucu, YollariEkle
 
 app = Flask(__name__)
 api = Api(app)
@@ -39,16 +38,20 @@ def start():
     """
     return render_template("Hosgeldin.html")
 
-
 if __name__ == "__main__":
+
+    # Ayarlar okunur ve atanır.
+    ayar_okuyucu = AyarOkuyucu.AyarOkuyucu()
+    ip = ayar_okuyucu.ayar("IP_ADRESS")
+    port = ayar_okuyucu.ayar("PORT")
 
     # Tüm endpointler eklenir. Enpointlerin çalışması için oluşturulan
     # veritabanı referansları iletilir.
     YollariEkle.YollariEkle(api, (database1, database2, database3))
 
-    test = IsEmriIzleyici.IsEmriIzleyici(database3)
-    test.start()
-    
-    # Sunucu istenilen prottan dinlemeye başlar
-    # app.run(host="192.168.0.72", port=80, debug=True)
-    app.run("192.168.0.72", port=80, debug=True)
+    # Ağ trafikteki gerekli bilgiler izlenir. İş emirleri güncellenir.
+    izleyici = IsEmriIzleyici.IsEmriIzleyici(database3)
+    izleyici.start()
+
+    # Sunucu istenilen porttan dinlemeye başlar
+    app.run(ip, port, debug=True)

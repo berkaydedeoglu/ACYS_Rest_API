@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 
@@ -125,3 +126,150 @@
 </body>
 
 </html>
+=======
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hosgeldin</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="acysrest">ACYSRest</h1>
+<p>İletişim Yazılım ACYS yazılımı için yazılmış veritabanlarına uzaktan soyutlanmış erişim sağlayan RESTful api.</p>
+<p><strong>Tüm veriler klasik JSON formatında alınıp okunur. Klasik http bağlantısı kurabilirsiniz. (port:80)</strong></p>
+<h2 id="kullanılabilir-yollar">Kullanılabilir Yollar</h2>
+<h3 id="makineler"><a href="./makineler">Makineler</a></h3>
+<h4 id="get">get:</h4>
+<p>Veritabanında kayıtlı kullanılabilir paketlerin tam listesini JSON formatında döndürür.</p>
+<hr>
+<hr>
+<h3 id="etiketler"><a href="./etiketler">Etiketler</a></h3>
+<h4 id="get-1">get:</h4>
+<p>Veritabanına kaydedilmiş tüm etiketleri JSON formatında döndürür.</p>
+<h5 id="kullanılabilir-özellikler">Kullanılabilir Özellikler:</h5>
+<ul>
+<li>
+<p><strong>./etiketler/&lt;int: tip&gt;:</strong> Etiketlerin tipine göre sorgu yapılmasını sağlar.</p>
+<pre><code>./etiketler/9 ::: Tüm "iş bağı" cihazlarını gösterir. 
+(iş bağı tip numarası 9'dur)
+
+./etiketler/1 ::: Tüm "çözgü" cihazlarını gösterir. 
+(çözgü tip numarası 9'dur)
+</code></pre>
+</li>
+</ul>
+<hr>
+<hr>
+<h3 id="kayıtlı-olaylar"><a href="./olaylar">Kayıtlı Olaylar</a></h3>
+<h4 id="get-2">get:</h4>
+<p>Veritabanına yazılmış tüm olayları döndürür. Çok fazla kayıt varsa yavaş çalışabilir</p>
+<p><em>(GELİŞTİRME NOTU: Sayfalandırma yapılabilir.)</em><br>
+<em>(GELİŞTİRME NOTU: Büyük verilerde veri kullanımından tasarruf için çözgü adı makine adı gibi veriler kaldırılıp ilişkisel yolla bağlanabilir.</em></p>
+<h5 id="kullanılabilir-özellikler-1">Kullanılabilir Özellikler:</h5>
+<ul>
+<li>
+<p><strong>./olaylar/&lt;int: yil&gt;:</strong> İlgili yıla göre sorgu yapılır.</p>
+<pre><code>./olaylar/2012 ::: 2012 yılına ait olayları gönderir.
+</code></pre>
+</li>
+<li>
+<p><strong>./olaylar/&lt;int: yil&gt;/&lt;int: ay&gt;:</strong> İstenilen yıl ve aya göre sogu yapılır.</p>
+<pre><code>./olaylar/2012/06 ::: 2012 yılının 6. ayına göre sorgu yapılır.
+</code></pre>
+</li>
+<li>
+<p><strong>./olaylar/&lt;int: yil&gt;/&lt;int: ay&gt;/&lt;int: gun&gt;</strong> : İstenilen yıl,  ay ve güne göre arama yapılır.</p>
+<pre><code>./olaylar/2012/06/17 ::: 2012 yılının 6. ayının 17. gününe göre sorgu yapılır.
+</code></pre>
+</li>
+</ul>
+<h4 id="post">post:</h4>
+<p>Veritabanına yeni olay yazar. Aldığı veriler:</p>
+<ul>
+<li>
+<p><strong>makine_adi</strong>: Değişiklik olan makinenin adı</p>
+</li>
+<li>
+<p><strong>makine_kodu</strong>: Değişiklik olan makinenin sistem kodu</p>
+</li>
+<li>
+<p><strong>olay</strong>: Değişiklik mesajı</p>
+</li>
+<li>
+<p><strong>cihaz_tipi</strong>: Makineye bağlanan ya da sökülen cihazın tip numarası.</p>
+</li>
+<li>
+<p><strong>cihaz_adi</strong>: Makineye bağlanan cihazın okunabilir adı.</p>
+</li>
+<li>
+<p><strong>cihaz_rfid</strong>: Bağlanan cihazın etiket kodu.</p>
+</li>
+<li>
+<p><strong>zaman</strong>: Değişiklik yapılma zamanı (datetime tipinde “yyyy-MM-dd hh.mm.ss” formatında olmalıdır)</p>
+<pre><code>post : ./olaylar  data={"makine_adi": "TEZGAH 1",
+				"zaman": "21.06.2018 06:58:34.000
+				"olay": "Çözgü değişti",
+				"makine_kodu": "axBdcf",
+				"cihaz_tipi": "1",
+				"cihaz_adi": "Çözgü 1",
+				"cihaz_rfid": "1274638462b47vc00008364830", })
+</code></pre>
+</li>
+</ul>
+<hr>
+<hr>
+<h3 id="anlık-olaylar"><a href="./anlikolaylar">Anlık Olaylar</a></h3>
+<p>Anlık olay oluşumlarının izlenebildiği yoldur. Makineye çözgü bağlanması, cihazların izlenmesi istenen olaylar bu yoldan ulaşılabilir.</p>
+<p><strong>NOT:</strong> Bu endpoint veritabanıyla hiçbir durumda haberleşmez.  Veriler daima bulunan makinenin RAM’inde tutulur. Bu yüzden yazılan veriler geçicidir.</p>
+<p>Şimdilik sadece makine olaylarını gösteriyor. Örnek bir makine olayı:</p>
+<pre><code>{
+  "olaylar": [
+    {
+      "olay": "degisim_basladi",
+      "mesaj": "Bağlanma bekleniyor",
+      "zaman": "19.06.2018 01:57",
+      "makine": "TEZGAH 1"
+    }
+  ]
+}
+</code></pre>
+<p>Bu endpoint,  projedeki tüm alanların birbirleri ile haberleşmesi için oluşturulmuştur. Bu yüzden bir olaydaki anahtar sözcüklerin nasıl seçileceği haberleşecek iki ucun anlaşmalarına bağlıdır.</p>
+<p>Örneğin C# Desktop Cilent ve Android Client uç tarafları çözgü değişiminin başladığını belirtmek için <strong>olay</strong> anahtar sözcüğünü kullanırlar. Yukarıdaki örnekte çözgü değişiminin başladığını ifade etmek için <em>degisim_basladi</em> etiketi kullanılmıştır. İki taraf da bu etiketi dinler.</p>
+<h4 id="get-3">get:</h4>
+<p>Sistemde o  anda yazılmış olayların tamamını listeler.  Olayları dinleyen tarafta kullanılır.</p>
+<p><strong>NOT:</strong> Şimdilik sadece makine olaylarını desteklemektedir. Her makine için karışıklığı önlemek ve performansı artırmak için maksimum 1 olay tutulur.</p>
+<h4 id="post-1">post:</h4>
+<p>Sisteme bir olay ekler. Olayları gönderecek tarafta kullanılır. Alınan veriler:</p>
+<ul>
+<li><strong>olay:</strong> Olay kodu. Tarafların haberleşmede kullandığı kodlar.</li>
+<li><strong>mesaj:</strong> Olayla birlikte gönderilen mesaj.</li>
+<li><strong>zaman:</strong> Olayın gerçekleşme zamanı.</li>
+<li><strong>makine:</strong> Olayın gerçekleştiği makine. (Makine kodu da olabilir)</li>
+</ul>
+<hr>
+<hr>
+<h3 id="i̇ş-emirleri"><a href="./isemirleri">İş Emirleri</a>:</h3>
+<p>CoralReef  yazılımının oluşturduğu iş emirleri tablosunun tüm satırlarını listeler. Listelenen sütunlar:</p>
+<ul>
+<li><strong>Operation.OID</strong> : Benzersiz operasyon ID’si. (<em>olay_id</em>)</li>
+<li><strong>Operation .Name</strong>:  İşin adı (<em>olay_isim</em>)</li>
+<li><strong>WorkOrder.PlanningBeginTime</strong>: İşin planlanan başlama zamanı. (<em>planlanan_baslangic</em>)</li>
+<li><strong>WorkOrder.PlanningEndTime</strong>: İşin planlanan bitiş zamanı. (<em>planlanan_bitis</em>)</li>
+<li><strong>WorkOrder.ActualBeginTime</strong>: İşin gerçekte başladığı an (<em>gercek_baslangic</em>)</li>
+<li><strong>WorkOrder.ActualEndTime</strong>: İşin gerçekte tamamlandığı an (<em>gerçek_bitis</em>)</li>
+<li><strong>WorkOrder.RunTime</strong>: Planlanan zamanlara göre saniye cinsinden zaman. (<em>calisma_zamani</em>)</li>
+<li><strong>WorkOrder.HeadTime</strong> : İşin gerçek zamanlı saniye cinsinden süresi. Dinamik. (<em>bitis_gecikme</em>)</li>
+<li><strong>WorkOrder.TailTime</strong> : İşin diğer işler yüzünden toplam gecikmesi. Dinamik. (<em>baslangic_gecime</em>)</li>
+</ul>
+<p><strong>Geliştirici Notu:</strong> İşlerin saniye cinsinden anlık değişimlerinin tutulması API kullanan clientler tarafından zorunlu olmasa da işleri kolaylaştırdığından ve istemcilerin yorumlama değil sadece gösterim yapma fikrine daha uygun olduğundan kullanılmıştır. Yapılan testlerde bu ekstra sütunların tutulması ve dinamik olarak değiştirilmesi çok çok küçük farklar oluşturduğundan görmezden gelinmiştir.</p>
+<p>Dinamik bilgiler anlık olarak (istenilen sürede bir) güncellenir. Güncellenme olayları ise anlık olaylar endpointinden sağlanır. Yani anlık olaylara gönderdiğiniz bir değer bu endpointi de etkileyebilir.</p>
+<p>Güncellenme sıklığını <a href="http://settings.br">settings.br</a> dosyasından değiştirebilirsiniz. (<em>IS_EMIRLERI_GUNCELLEME_SURESI</em>)</p>
+</div>
+</body>
+
+</html>
+>>>>>>> config_dosyasi
