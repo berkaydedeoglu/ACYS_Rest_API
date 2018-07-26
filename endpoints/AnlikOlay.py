@@ -19,7 +19,7 @@ class AnlikOlay(Resource):
 
         args = self._parametreler.parse_args()
 
-        m = self.makineyi_bul(args["makine"].strip())
+        m = self.makineyi_bul(args["makine_id"].strip())
 
         if m != -1:
             m["olay"] = args["olay"]

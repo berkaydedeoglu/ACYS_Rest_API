@@ -43,31 +43,31 @@ class IsEmriIzleyici(threading.Thread):
             if not self.bayrak:
                 self.diger_operasyon(olay["zaman"])
             self.bayrak = True
-        elif olay["olay"] == "degisim_basladi":
+        elif olay["olay"] == "yeni_cozgu_geldi":
             # Çözgü taşıma operasyonu bitmiştir.
             # Çözgü takılma operasyonu başlamıştır.
             if self.bayrak:
                 self.diger_operasyon(olay["zaman"])
             self.bayrak = False
-        elif olay["olay"] == "cozgu_baglandi":
+        elif olay["olay"] == "eski_cozgu_gitti":
             # Çözgü takılma operasyonu bitmiştir.
             # Sehpa taşıma operasyonu başlamıştır.
             if not self.bayrak:
                 self.diger_operasyon(olay["zaman"])
             self.bayrak = True
-        elif olay["mesaj"] == "İş bağı bekleniyor":
+        elif olay["olay"] == "sehpa_geldi":
             # Sehpa bağlanmıştır.
             # Sehpa çözgü bağlama operasyonu başlamıştır.
             if self.bayrak:
                 self.diger_operasyon(olay["zaman"])
             self.bayrak = False
-        elif olay["mesaj"] == "İş bağı ayrılacak":
+        elif olay["olay"] == "is_bagi_geldi":
             # Önceki operasyon tamamlanmıştır.
             # İş bağı bitişi operasyonu başlamıştır.
             if not self.bayrak:
                 self.diger_operasyon(olay["zaman"])
             self.bayrak = True
-        elif olay["mesaj"] == "Ayar bekleniyor":
+        elif olay["olay"] == "sehpa_ayrildi":
             # iş bağı ve sehpa ayrılmıştır.
             # Ayar yapılması operasyonu başlamıştır.
             if self.bayrak:
@@ -88,7 +88,7 @@ class IsEmriIzleyici(threading.Thread):
             self.is_emirleri = self.is_emirleri_cls.get()["is_emirleri"]
 
             if not self.anlik_is_emri:
-                time.sleep(10)
+                time.sleep(5)
                 continue
 
             timer2 = time.clock()
