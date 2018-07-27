@@ -65,3 +65,8 @@ class IsEmirleri(Resource):
         sorgu = "UPDATE WorkOrder set TailTime={} WHERE OID={}".format(zaman, emir_id)
         self._cursor.execute(sorgu)
         self._db.commit()
+
+    def set_planli_zaman(self, emir_id, baslangic_zaman, bitis_zaman):
+        sorgu = "UPDATE WorkOrder set PlanningBeginTime=convert(datetime, '{}'), PlanningEndTime=convert(datetime, '{}') WHERE OID={}".format(baslangic_zaman, bitis_zaman, emir_id)
+        self._cursor.execute(sorgu)
+        self._db.commit()

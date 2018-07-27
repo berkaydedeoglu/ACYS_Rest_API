@@ -26,3 +26,8 @@ def YollariEkle(api, databases):
     from endpoints import IsEmirleri
     api.add_resource(IsEmirleri.IsEmirleri, "/isemirleri",
                     resource_class_kwargs={"database": databases[2]})
+    
+    from endpoints import Optimizasyon
+    api.add_resource(Optimizasyon.Optimizasyon, "/optimizasyon",
+                    "/optimizasyon/<int:tezgah>/<int:meydanci>/<int:sehpa>/<int:is_bagi>",
+                    resource_class_kwargs={"database": databases[2]})
