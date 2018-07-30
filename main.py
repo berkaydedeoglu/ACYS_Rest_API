@@ -22,7 +22,7 @@ database2 = db.connect(r'DRIVER={SQL SERVER};'
 
 database3 = db.connect(r'DRIVER={SQL SERVER};'
                        r'SERVER=localhost;'
-                       r'DATABASE=CoralReef_Ersan;'
+                       r'DATABASE=CoralReef_Ersan2;'
                        r'UID=sa;'
                        r'PWD=Berkay.97;')
 
