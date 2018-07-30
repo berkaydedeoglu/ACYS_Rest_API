@@ -9,7 +9,7 @@ class AnlikOlay(Resource):
         self._parametreler = reqparse.RequestParser()
 
     def get(self):
-        return {"olaylar": self._olaylar}, 200
+        return {"olaylar": self._olaylar}
 
     def post(self):
         self._parametreler.add_argument("olay")
